@@ -1,0 +1,400 @@
+<!-- <div class="card mt-5 w-100"> -->
+
+    <div class="card mt-5 ">
+
+        <p-toast />
+       
+        <p-toolbar>
+    
+            <div class="p-toolbar-group-start">
+                <h6>1.0 Exacavation</h6>
+    
+                <!-- <div class="p-inputgroup ml-3">
+                    <div class="inline-element border border-1 border-black">
+                        6000000
+                     </div>
+                     <ng-container >
+                        <div class="inline-element border border-1 border-black">
+                           currency
+                        </div>
+                    </ng-container>
+                </div> -->
+            </div>
+            <div class="p-toolbar-group-center">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText placeholder="Search" />
+                </span>
+    
+                <div class="p-inputgroup ml-3">
+                    <input type="number" pInputNumber placeholder="Profit Margin" />
+                    <button type="button" pButton styleClass="p-button-warn">Apply</button>
+                </div>
+            </div>
+            <div class="p-toolbar-group-end">
+                <button pButton pRipple icon="pi pi-copy" class="p-button-rounded m-2"></button>
+                <button pButton size="small" icon="pi pi-trash" severity="danger" class="m-2"></button>
+                <button pButton icon="pi pi-print" size="small" class="m-2 "></button>
+                <button pButton label="Export" size="small" (click)="exportExcel()" icon="pi pi-download"
+                    class="m-2"></button>
+                <button pButton label="Import" size="small" (click)="exportExcel()" icon="pi pi-upload"
+                    class="m-2"></button>
+            </div>
+        </p-toolbar>
+    
+        <div class="container text-center">
+            <div class="row justify-content-center fs-6 fw-bold ">
+                <div class="col-2 border border-danger-subtle">
+                   Total Value:
+                  </div>
+                <div class="col-2 border border-danger-subtle">
+                  6000000
+                </div>
+                <div class="col-2 border border-danger-subtle">
+                  Currency
+                </div>
+              </div>
+          </div>
+    </div>
+    
+    
+   
+    
+    <p-table [value]="invoicesRecords" dataKey="mainItemCode" [resizableColumns]="true" [expandedRowKeys]="expandedRows">
+    
+        <ng-template pTemplate="caption">
+            <div class="flex flex-wrap justify-content-end gap-2">
+                
+                <p-button label="Expand All" icon="pi pi-plus"  (onClick)="expandAll()" />
+                <p-button label="Collapse All" icon="pi pi-minus"  (onClick)="collapseAll()" />
+            </div>
+        </ng-template>
+    
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width: 10rem;"> </th>
+                <th style="min-width: 10rem;"> </th>
+                <th style="min-width: 10rem;"> MainItem.No </th>
+                <th style="min-width: 10rem;"> SubItem.No </th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="name">ServiceNO. <p-sortIcon field="name" />
+                </th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="price">Description <p-sortIcon
+                        field="price" /></th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="category">Quantity <p-sortIcon
+                        field="category" /></th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">UOM <p-sortIcon field="rating" />
+                </th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">Formula <p-sortIcon
+                        field="rating" /> </th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">Parameters <p-sortIcon
+                        field="rating" /></th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">AmountPerUnit <p-sortIcon
+                        field="rating" /></th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">Currency <p-sortIcon
+                        field="rating" /></th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">Totla <p-sortIcon field="rating" />
+                </th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">ProfitMargin % <p-sortIcon
+                        field="rating" /></th>
+                <th style="min-width: 10rem;" pResizableColumn pSortableColumn="rating">TotalWithProfit <p-sortIcon
+                        field="rating" /></th>
+                <th style="min-width: 10rem;">Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mainItem let-ri="rowIndex" let-expanded="expanded">
+            <tr>
+                <td style="min-width: 10rem;">
+                    <p-button type="button" pRipple [pRowToggler]="mainItem" [text]="true" [rounded]="true" [plain]="true"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                </td>
+                <td style="min-width: 10rem;">
+    
+                    <p-checkbox [value]="mainItem" name="fieldName" [(ngModel)]="mainItem.selected"
+                        (onChange)="onRecordSelectionChange($event, mainItem)"></p-checkbox>
+    
+                </td>
+                <td style="min-width: 10rem;">
+                    {{ rowIndex + ri + 1 }}
+                </td>
+                <td style="min-width: 10rem;">
+    
+                </td>
+                <td style="min-width: 10rem;">{{ mainItem.serviceNumberCode }}</td>
+                <td style="min-width: 10rem;">{{ mainItem.description}}</td>
+                <td style="min-width: 10rem;">{{ mainItem.quantity }}</td>
+                <td style="min-width: 10rem;">{{ mainItem.unitOfMeasurementCode }}</td>
+                <td style="min-width: 10rem;"> {{ mainItem.formulaCode }}</td>
+                <td style="min-width: 10rem;">Parameters</td>
+                <td style="min-width: 10rem;">{{ mainItem.amountPerUnit }}</td>
+                <td style="min-width: 10rem;">{{ mainItem.currencyCode }}
+                </td>
+                <td style="min-width: 10rem;">{{ mainItem.total }}</td>
+                <td style="min-width: 10rem;">{{ mainItem.profitMargin }}
+                </td>
+                <td style="min-width: 10rem;">{{ mainItem.totalWithProfit }}</td>
+                <td style="min-width: 10rem;">actions</td>
+            </tr>
+    
+        </ng-template>
+    
+    
+        <ng-template pTemplate="rowexpansion" let-mainItem>
+            <!-- <tr> -->
+            <td colspan="16">
+                <!-- <div class="rowPadding"> -->
+                <p-table [value]="subItemsTestRecords"  dataKey="id" [resizableColumns]="true"
+                    [expandedRowKeys]="expandedRows">
+               
+                    <ng-template pTemplate="body" let-subItem let-ri="rowIndex">
+                        <tr>
+    
+                            <td style="min-width: 7rem; "></td>
+    
+                            <td style="min-width: 7rem;">
+                            </td>
+                            <td style="min-width: 7rem;"></td>
+                            <!-- <td style="min-width: 10rem;" >  {{ ri + 1 }}</td> -->
+                            <td style="min-width: 7rem;">
+                                {{ ri + 1 }}
+                                <input style="min-width: 1rem;" name="fieldName" value="{{subItem.selected}}" type="checkbox"
+                                    [(ngModel)]="subItem.selected" (change)="onSubItemSelectionChange($event,subItem)" [checked]="subItem.selected">
+                            </td>
+                            <td style="min-width: 10rem;">{{ subItem.serviceNumberCode }}</td>
+                            <td style="min-width: 10rem;">{{ subItem.description }}</td>
+                            <td style="min-width: 10rem;">{{ subItem.quantity }}</td>
+                            <td style="min-width: 10rem;">{{ subItem.unitOfMeasurementCode }}</td>
+                            <td style="min-width: 10rem;">{{ subItem.formulaCode }}</td>
+                            <td style="min-width: 10rem;">Parameters</td>
+                            <td style="min-width: 10rem;">{{ subItem.amountPerUnit }}</td>
+                            <td style="min-width: 10rem;">{{ subItem.currency }}</td>
+                            <td style="min-width: 10rem;">{{ subItem.total}}</td>
+                            <td style="min-width: 10rem;"></td>
+                            <td style="min-width: 10rem;"></td>
+                            <td style="min-width: 10rem;"></td>
+                            <!-- <td style="min-width: 10rem; "></td> -->
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer" class="m-3">
+                        <tr>
+                            <td style="min-width: 10rem;">
+                
+                            </td>
+                            <td style="min-width: 10rem;">
+                
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <!-- <p-radioButton name="type" value="M" [(ngModel)]="recordType" inputId="type" />
+                                <label for="type" class="ml-2">
+                                    M
+                                </label> -->
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <!-- <p-radioButton name="type" value="S" [(ngModel)]="recordType" inputId="type" />
+                                <label for="type" class="ml-2">
+                                    S
+                                </label> -->
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                                    [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                                    [filterFields]="['name']" [showClear]="true" placeholder="Select Service" [virtualScroll]="true"
+                                    [appendTo]="'body'" [virtualScrollItemSize]="40">
+                                    <ng-template let-record pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ record.name }}::{{ record.code }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <input pInputNumber name="description" type="text">
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <input pInputNumber name="quantity" type="number" [min]="0">
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                                    [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                                    [filterFields]="['name']" [showClear]="true" placeholder="Select Uom" [virtualScroll]="true"
+                                    [appendTo]="'body'" [virtualScrollItemSize]="40">
+                                    <ng-template let-record pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ record.name }}::{{ record.code }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                                    [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                                    [filterFields]="['name']" [showClear]="true" placeholder="Select Formula" [virtualScroll]="true"
+                                    [appendTo]="'body'" [virtualScrollItemSize]="40">
+                                    <ng-template let-record pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ record.name }}::{{ record.code }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <button class="mb-2" (click)="openPopup()">Values</button>
+                                <ng-container *ngIf="showPopup && selectedCountry ">
+                                    <div class="popup">
+                                        <h3>Enter Values</h3>
+                                        <div *ngFor="let parameterId of selectedCountry">
+                                            <label class="form-label">{{ parameterId }}:</label>
+                                            <input class="form-input" pInputNumber type="number" [min]="0"
+                                                [(ngModel)]="parameterValues[parameterId]">
+                                        </div>
+                                        <button class="form-button" (click)="saveParameters()">Save</button>
+                                    </div>
+                                </ng-container>
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <input pInputNumber name="quantity" type="number" [min]="0">
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                                    [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                                    [filterFields]="['name']" [showClear]="true" placeholder="Select Currency" [virtualScroll]="true"
+                                    [appendTo]="'body'" [virtualScrollItemSize]="40">
+                                    <ng-template let-record pTemplate="item">
+                                        <div class="flex align-items-center gap-2">
+                                            <div>{{ record.name }}::{{ record.code }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <input pInputNumber name="quantity" type="number" [min]="0">
+                            </td>
+                            <td style="min-width: 16.5rem;">
+                                <!-- <input pInputNumber name="quantity" type="number" [min]="0"> -->
+                            </td>
+                            <td style="min-width: 16.5rem;">
+                                <!-- <input pInputNumber name="quantity" type="number" [min]="0"> -->
+                            </td>
+                            <td style="min-width: 10rem;">
+                                <button pButton type="button" icon="pi pi-plus" class="ui-button-info" label="Save Line"
+                                    (click)="addRow()">
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- </div> -->
+            </td>
+            <!-- </tr> -->
+        </ng-template>
+    
+        <ng-template pTemplate="footer" class="m-3">
+            <tr>
+                <td style="min-width: 10rem;">
+    
+                </td>
+                <td style="min-width: 10rem;">
+    
+                </td>
+                <td style="min-width: 10rem;">
+                    <p-radioButton name="type" value="M" [(ngModel)]="recordType" inputId="type" />
+                    <label for="type" class="ml-2">
+                        M
+                    </label>
+                </td>
+                <td style="min-width: 10rem;">
+                    <p-radioButton name="type" value="S" [(ngModel)]="recordType" inputId="type" />
+                    <label for="type" class="ml-2">
+                        S
+                    </label>
+                </td>
+                <td style="min-width: 10rem;">
+                    <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                        [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                        [filterFields]="['name']" [showClear]="true" placeholder="Select Service" [virtualScroll]="true"
+                        [appendTo]="'body'" [virtualScrollItemSize]="40">
+                        <ng-template let-record pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ record.name }}::{{ record.code }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </td>
+                <td style="min-width: 10rem;">
+                    <input pInputNumber name="description" type="text">
+                </td>
+                <td style="min-width: 10rem;">
+                    <input pInputNumber name="quantity" type="number" [min]="0">
+                </td>
+                <td style="min-width: 10rem;">
+                    <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                        [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                        [filterFields]="['name']" [showClear]="true" placeholder="Select Uom" [virtualScroll]="true"
+                        [appendTo]="'body'" [virtualScrollItemSize]="40">
+                        <ng-template let-record pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ record.name }}::{{ record.code }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </td>
+                <td style="min-width: 10rem;">
+                    <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                        [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                        [filterFields]="['name']" [showClear]="true" placeholder="Select Formula" [virtualScroll]="true"
+                        [appendTo]="'body'" [virtualScrollItemSize]="40">
+                        <ng-template let-record pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ record.name }}::{{ record.code }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </td>
+                <td style="min-width: 10rem;">
+                    <button class="mb-2" (click)="openPopup()">Values</button>
+                    <ng-container *ngIf="showPopup && selectedCountry ">
+                        <div class="popup">
+                            <h3>Enter Values</h3>
+                            <div *ngFor="let parameterId of selectedCountry">
+                                <label class="form-label">{{ parameterId }}:</label>
+                                <input class="form-input" pInputNumber type="number" [min]="0"
+                                    [(ngModel)]="parameterValues[parameterId]">
+                            </div>
+                            <button class="form-button" (click)="saveParameters()">Save</button>
+                        </div>
+                    </ng-container>
+                </td>
+                <td style="min-width: 10rem;">
+                    <input pInputNumber name="quantity" type="number" [min]="0">
+                </td>
+                <td style="min-width: 10rem;">
+                    <p-dropdown [options]="countries" [required]=true [(ngModel)]="selectedCountry"
+                        [ngModelOptions]="{standalone: true}" optionValue="name" optionLabel="name" [filter]="true"
+                        [filterFields]="['name']" [showClear]="true" placeholder="Select Currency" [virtualScroll]="true"
+                        [appendTo]="'body'" [virtualScrollItemSize]="40">
+                        <ng-template let-record pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <div>{{ record.name }}::{{ record.code }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </td>
+                <td style="min-width: 10rem;">
+                    <input pInputNumber name="quantity" type="number" [min]="0">
+                </td>
+                <td style="min-width: 10rem;">
+                    <input pInputNumber name="quantity" type="number" [min]="0">
+                </td>
+                <td style="min-width: 10rem;">
+                    <input pInputNumber name="quantity" type="number" [min]="0">
+                </td>
+                <td style="min-width: 10rem;">
+                    <button pButton type="button" icon="pi pi-plus" class="ui-button-info" label="Save Line"
+                        (click)="addRow()">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    
+    <!-- </div> -->
+    
